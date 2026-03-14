@@ -11,7 +11,8 @@ export default function SessionView() {
   const { sessionId } = useParams<{ sessionId: string }>();
   const slugResult = useSlug();
   const [showGroupSelector, setShowGroupSelector] = useState(false);
-  const { invalidate } = useResponseContext();
+  const { invalidate, version } = useResponseContext();
+  void version; // subscribe to context changes so localStorage reads stay fresh
 
   // Must call hooks unconditionally
   const eventId = slugResult.found ? slugResult.event.id : '';
@@ -44,6 +45,7 @@ export default function SessionView() {
   const handleGroupSelect = (gId: string) => {
     setGroupAssignment(session.id, gId);
     setShowGroupSelector(false);
+    invalidate();
   };
 
   const handleSubmit = (answers: Record<string, number>) => {
