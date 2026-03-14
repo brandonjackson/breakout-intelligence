@@ -4,6 +4,8 @@
 
 Breakout Intelligence is a lightweight web app for collecting and visualising real-time survey responses during scenario planning workshops. Participants join via a unique invite link, answer Likert-scale questions across plenary and breakout sessions, and view aggregated results with group-level breakdowns.
 
+It's designed to work without the need to register. 
+
 The spec is organised into build phases. Each phase is self-contained and builds on the previous one.
 
 ---
