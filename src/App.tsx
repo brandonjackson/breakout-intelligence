@@ -10,7 +10,7 @@ import DevTools from './components/dev/DevTools';
 export default function App() {
   return (
     <ResponseProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/breakout-intelligence">
         <Routes>
           <Route element={<AppShell />}>
             <Route path="/" element={<LandingPage />} />
