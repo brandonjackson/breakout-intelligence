@@ -19,6 +19,47 @@ export function standardDeviation(values: number[]): number {
   return Math.sqrt(squareDiffs.reduce((sum, v) => sum + v, 0) / (values.length - 1));
 }
 
+export interface BoxPlotStats {
+  min: number;
+  q1: number;
+  median: number;
+  q3: number;
+  max: number;
+  whiskerLow: number;
+  whiskerHigh: number;
+}
+
+export function boxPlotStats(values: number[]): BoxPlotStats | null {
+  if (values.length === 0) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  const n = sorted.length;
+
+  const q = (p: number): number => {
+    const pos = p * (n - 1);
+    const lo = Math.floor(pos);
+    const hi = Math.ceil(pos);
+    return lo === hi ? sorted[lo] : sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
+  };
+
+  const q1 = q(0.25);
+  const med = q(0.5);
+  const q3 = q(0.75);
+  const iqr = q3 - q1;
+
+  const whiskerLow = Math.max(sorted[0], q1 - 1.5 * iqr);
+  const whiskerHigh = Math.min(sorted[n - 1], q3 + 1.5 * iqr);
+
+  return {
+    min: sorted[0],
+    q1,
+    median: med,
+    q3,
+    max: sorted[n - 1],
+    whiskerLow,
+    whiskerHigh,
+  };
+}
+
 export function gaussianKDE(
   values: number[],
   bandwidth?: number,
