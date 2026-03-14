@@ -1,0 +1,63 @@
+events:
+  - id: "sample-workshop"
+    name: "Annual Strategy Workshop"
+    description: "Aligning on priorities and assessing organisational readiness"
+    status: "active"
+    participants:
+      - slug: "red-cuddly-fox"
+      - slug: "blue-gentle-owl"
+      - slug: "warm-sleepy-panda"
+      - slug: "bright-tiny-heron"
+    sessions:
+      - id: "opening-plenary"
+        name: "Opening Plenary: State of Play"
+        type: "plenary"
+        status: "open"
+        order: 1
+        questions:
+          - id: "q1"
+            prompt: "How well is our organisation adapting to recent changes in the market?"
+            likert_labels:
+              - "Not at all well"
+              - "Slightly well"
+              - "Moderately well"
+              - "Very well"
+              - "Extremely well"
+          - id: "q2"
+            prompt: "How confident are you that our current strategy will deliver results in the next 12 months?"
+            likert_labels:
+              - "Very unlikely"
+              - "Unlikely"
+              - "Neutral"
+              - "Likely"
+              - "Very likely"
+
+      - id: "breakout-priorities"
+        name: "Breakout: Strategic Priorities"
+        type: "breakout"
+        status: "open"
+        order: 2
+        groups:
+          - id: "growth"
+            name: "Table 1: Growth"
+          - id: "operations"
+            name: "Table 2: Operations"
+          - id: "talent"
+            name: "Table 3: Talent"
+        questions:
+          - id: "q3"
+            prompt: "Our team has the resources needed to execute on its top priority this quarter."
+            likert_labels:
+              - "Strongly disagree"
+              - "Disagree"
+              - "Neutral"
+              - "Agree"
+              - "Strongly agree"
+          - id: "q4"
+            prompt: "Rate your confidence in our ability to hire the right people in the next 6 months."
+            likert_labels:
+              - "1 - No confidence"
+              - "2"
+              - "3"
+              - "4"
+              - "5 - Full confidence"
