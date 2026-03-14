@@ -84,16 +84,14 @@ export default function SessionView() {
         isUpdate={!!existingResponse}
         onSubmit={handleSubmit}
       />
-      {existingResponse && (
-        <div className="mt-4 text-center">
-          <Link
-            to={`/invite/${slug}/session/${session.id}/results`}
-            className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
-          >
-            View Results
-          </Link>
-        </div>
-      )}
+      <div className="mt-4 text-center">
+        <Link
+          to={`/invite/${slug}/session/${session.id}/results`}
+          className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+        >
+          View Results
+        </Link>
+      </div>
     </div>
   );
 }
