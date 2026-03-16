@@ -1,5 +1,3 @@
-import { boxPlotStats } from '../../lib/stats';
-
 interface GroupData {
   groupName: string;
   values: number[];
@@ -10,19 +8,31 @@ interface Props {
   groups: GroupData[];
 }
 
-const BOX_COLOR = '#6366f1'; // indigo-500
-const MEDIAN_COLOR = '#ffffff';
-const WHISKER_COLOR = '#4b5563'; // gray-600
+const GROUP_COLORS = [
+  '#6366f1', // indigo-500
+  '#f59e0b', // amber-500
+  '#10b981', // emerald-500
+  '#ef4444', // red-500
+  '#8b5cf6', // violet-500
+  '#ec4899', // pink-500
+];
+
+// Mulberry32 seeded PRNG — deterministic across re-renders
+function mulberry32(seed: number) {
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 
 export default function BoxPlotChart({ labels, groups }: Props) {
-  const n = labels.length;
   const scaleMin = 1;
-  const scaleMax = n;
+  const scaleMax = labels.length;
 
-  // Filter groups that have data
-  const activeGroups = groups
-    .map((g) => ({ ...g, stats: boxPlotStats(g.values) }))
-    .filter((g) => g.stats !== null);
+  const activeGroups = groups.filter((g) => g.values.length > 0);
 
   if (activeGroups.length === 0) return null;
 
@@ -30,12 +40,18 @@ export default function BoxPlotChart({ labels, groups }: Props) {
   const topPadding = 8;
   const bottomPadding = 36;
   const leftPadding = 120;
-  const rightPadding = 48;
+  const rightPadding = 16;
   const chartHeight = activeGroups.length * rowHeight + topPadding + bottomPadding;
+
+  const smallR = rowHeight * 0.2;   // 40% row height diameter
+  const largeR = rowHeight * 0.4;   // 80% row height diameter
+  const jitterMag = 0.8 * smallR;   // ±0.8 × smallDotRadius in SVG units
 
   const toX = (val: number, width: number) => {
     return leftPadding + ((val - scaleMin) / (scaleMax - scaleMin)) * (width - leftPadding - rightPadding);
   };
+
+  const rand = mulberry32(42);
 
   return (
     <div className="mb-4">
@@ -43,9 +59,8 @@ export default function BoxPlotChart({ labels, groups }: Props) {
       <svg
         viewBox={`0 0 500 ${chartHeight}`}
         className="w-full"
-        style={{ maxHeight: chartHeight }}
       >
-        {/* X-axis tick marks and labels */}
+        {/* Light vertical gridlines at each scale point */}
         {labels.map((label, i) => {
           const x = toX(i + 1, 500);
           return (
@@ -68,17 +83,11 @@ export default function BoxPlotChart({ labels, groups }: Props) {
           );
         })}
 
-        {/* Box plots per group */}
+        {/* Dot plots per group */}
         {activeGroups.map((g, i) => {
-          const stats = g.stats!;
+          const color = GROUP_COLORS[i % GROUP_COLORS.length];
           const cy = topPadding + i * rowHeight + rowHeight / 2;
-          const boxH = 20;
-
-          const xWhiskerLow = toX(stats.whiskerLow, 500);
-          const xWhiskerHigh = toX(stats.whiskerHigh, 500);
-          const xQ1 = toX(stats.q1, 500);
-          const xQ3 = toX(stats.q3, 500);
-          const xMedian = toX(stats.median, 500);
+          const mean = g.values.reduce((sum, v) => sum + v, 0) / g.values.length;
 
           return (
             <g key={g.groupName}>
@@ -94,52 +103,38 @@ export default function BoxPlotChart({ labels, groups }: Props) {
                 {g.groupName}
               </text>
 
-              {/* Whisker line */}
-              <line
-                x1={xWhiskerLow} y1={cy}
-                x2={xWhiskerHigh} y2={cy}
-                stroke={WHISKER_COLOR} strokeWidth={1.5}
-              />
+              {/* Individual response dots with x-axis jitter */}
+              {g.values.map((v, j) => {
+                const jitter = (rand() - 0.5) * 2 * jitterMag;
+                return (
+                  <circle
+                    key={j}
+                    cx={toX(v, 500) + jitter}
+                    cy={cy}
+                    r={smallR}
+                    fill={color}
+                    fillOpacity={0.25}
+                  />
+                );
+              })}
 
-              {/* Whisker caps */}
-              <line
-                x1={xWhiskerLow} y1={cy - boxH / 4}
-                x2={xWhiskerLow} y2={cy + boxH / 4}
-                stroke={WHISKER_COLOR} strokeWidth={1.5}
+              {/* Mean dot with value label */}
+              <circle
+                cx={toX(mean, 500)}
+                cy={cy}
+                r={largeR}
+                fill={color}
               />
-              <line
-                x1={xWhiskerHigh} y1={cy - boxH / 4}
-                x2={xWhiskerHigh} y2={cy + boxH / 4}
-                stroke={WHISKER_COLOR} strokeWidth={1.5}
-              />
-
-              {/* IQR box */}
-              <rect
-                x={xQ1}
-                y={cy - boxH / 2}
-                width={Math.max(xQ3 - xQ1, 1)}
-                height={boxH}
-                fill={BOX_COLOR}
-                fillOpacity={0.7}
-                rx={3}
-              />
-
-              {/* Median line */}
-              <line
-                x1={xMedian} y1={cy - boxH / 2}
-                x2={xMedian} y2={cy + boxH / 2}
-                stroke={MEDIAN_COLOR} strokeWidth={2}
-              />
-
-              {/* Sample size */}
               <text
-                x={500 - rightPadding + 8}
-                y={cy + 1}
-                dominantBaseline="middle"
+                x={toX(mean, 500)}
+                y={cy}
+                textAnchor="middle"
+                dominantBaseline="central"
                 fontSize={10}
-                fill="#9ca3af"
+                fontWeight="bold"
+                fill="#ffffff"
               >
-                n={g.values.length}
+                {mean.toFixed(1)}
               </text>
             </g>
           );
