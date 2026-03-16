@@ -14,7 +14,7 @@ export default function SessionHeader({ session, groupName, onChangeGroup }: Pro
         <span
           className={`text-xs font-medium px-2 py-0.5 rounded-full ${
             session.type === 'plenary'
-              ? 'bg-indigo-100 text-indigo-700'
+              ? 'bg-brand-blue/15 text-brand-blue'
               : 'bg-amber-100 text-amber-700'
           }`}
         >

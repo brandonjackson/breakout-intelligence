@@ -87,7 +87,7 @@ export default function SessionView() {
       <div className="mt-4 text-center">
         <Link
           to={`/invite/${slug}/session/${session.id}/results`}
-          className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+          className="text-sm text-brand-blue hover:text-brand-deep font-medium"
         >
           View Results
         </Link>

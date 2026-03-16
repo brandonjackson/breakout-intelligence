@@ -20,14 +20,14 @@ export default function ResultsPage() {
       <div className="flex gap-3 mb-6">
         <Link
           to={`/invite/${slug}`}
-          className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+          className="text-sm text-brand-blue hover:text-brand-deep font-medium"
         >
           Back to Sessions
         </Link>
         {session.status === 'open' && (
           <Link
             to={`/invite/${slug}/session/${session.id}`}
-            className="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
+            className="text-sm text-brand-blue hover:text-brand-deep font-medium"
           >
             Answer Questions
           </Link>

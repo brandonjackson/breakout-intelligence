@@ -9,7 +9,7 @@ interface Props {
 }
 
 const GROUP_COLORS = [
-  '#6366f1', // indigo-500
+  '#2951FF', // brand-blue
   '#f59e0b', // amber-500
   '#10b981', // emerald-500
   '#ef4444', // red-500
