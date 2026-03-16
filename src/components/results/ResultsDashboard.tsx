@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { SessionDef, QuestionDef } from '../../lib/types';
 import { getAllResponses } from '../../hooks/useResponses';
 import { useResponseContext } from '../../context/ResponseContext';
@@ -5,7 +6,6 @@ import ResponseHistogram from './ResponseHistogram';
 import BoxPlotChart from './BoxPlotChart';
 import SummaryStats from './SummaryStats';
 import GroupBreakdown from './GroupBreakdown';
-import KDEOverlay from './KDEOverlay';
 
 interface Props {
   eventId: string;
@@ -93,19 +93,45 @@ function QuestionResults({
       <div className="lg:grid lg:grid-cols-2 lg:gap-6">
         <div>
           <ResponseHistogram labels={question.likert_labels} values={allValues} />
-          <KDEOverlay values={allValues} min={1} max={n} />
+          <SummaryStats values={allValues} />
         </div>
         <div>
           <BoxPlotChart labels={question.likert_labels} groups={boxPlotGroups} />
-          <SummaryStats values={allValues} />
         </div>
       </div>
 
       {session.type === 'breakout' && groupData.length > 0 && (
-        <GroupBreakdown
+        <GroupBreakdownCollapsible
           labels={question.likert_labels}
           groups={groupData.map((g) => ({ group: g.group, values: g.values }))}
         />
+      )}
+    </div>
+  );
+}
+
+function GroupBreakdownCollapsible({
+  labels,
+  groups,
+}: {
+  labels: string[];
+  groups: { group: { id: string; name: string }; values: number[] }[];
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="mt-4 border border-gray-200 rounded-lg overflow-hidden">
+      <button
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-4 py-3 bg-white hover:bg-gray-50 text-left"
+      >
+        <span className="text-sm font-semibold text-gray-700">See Group Breakdowns</span>
+        <span className="text-gray-400 text-sm">{open ? '−' : '+'}</span>
+      </button>
+      {open && (
+        <div className="px-4 py-3 border-t border-gray-100 bg-gray-50">
+          <GroupBreakdown labels={labels} groups={groups} />
+        </div>
       )}
     </div>
   );
