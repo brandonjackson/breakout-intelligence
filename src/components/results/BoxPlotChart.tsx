@@ -100,7 +100,19 @@ export default function BoxPlotChart({ labels, groups }: Props) {
                 fontSize={18}
                 fill="#374151"
               >
-                {g.groupName}
+                {g.groupName.includes(' ') ? (
+                  g.groupName.split(' ').map((word, wi, arr) => (
+                    <tspan
+                      key={wi}
+                      x={leftPadding - 8}
+                      dy={wi === 0 ? `${-(arr.length - 1) * 0.55}em` : '1.1em'}
+                    >
+                      {word}
+                    </tspan>
+                  ))
+                ) : (
+                  g.groupName
+                )}
               </text>
 
               {/* Individual response dots with x-axis jitter */}
