@@ -1,5 +1,3 @@
-import { boxPlotStats } from '../../lib/stats';
-
 interface GroupData {
   groupName: string;
   values: number[];
@@ -10,19 +8,21 @@ interface Props {
   groups: GroupData[];
 }
 
-const BOX_COLOR = '#6366f1'; // indigo-500
-const MEDIAN_COLOR = '#ffffff';
-const WHISKER_COLOR = '#4b5563'; // gray-600
+const GROUP_COLORS = [
+  '#6366f1', // indigo-500
+  '#f59e0b', // amber-500
+  '#10b981', // emerald-500
+  '#ef4444', // red-500
+  '#8b5cf6', // violet-500
+  '#ec4899', // pink-500
+];
 
 export default function BoxPlotChart({ labels, groups }: Props) {
   const n = labels.length;
   const scaleMin = 1;
   const scaleMax = n;
 
-  // Filter groups that have data
-  const activeGroups = groups
-    .map((g) => ({ ...g, stats: boxPlotStats(g.values) }))
-    .filter((g) => g.stats !== null);
+  const activeGroups = groups.filter((g) => g.values.length > 0);
 
   if (activeGroups.length === 0) return null;
 
@@ -30,7 +30,7 @@ export default function BoxPlotChart({ labels, groups }: Props) {
   const topPadding = 8;
   const bottomPadding = 36;
   const leftPadding = 120;
-  const rightPadding = 48;
+  const rightPadding = 16;
   const chartHeight = activeGroups.length * rowHeight + topPadding + bottomPadding;
 
   const toX = (val: number, width: number) => {
@@ -68,17 +68,11 @@ export default function BoxPlotChart({ labels, groups }: Props) {
           );
         })}
 
-        {/* Box plots per group */}
+        {/* Dot plots per group */}
         {activeGroups.map((g, i) => {
-          const stats = g.stats!;
+          const color = GROUP_COLORS[i % GROUP_COLORS.length];
           const cy = topPadding + i * rowHeight + rowHeight / 2;
-          const boxH = 20;
-
-          const xWhiskerLow = toX(stats.whiskerLow, 500);
-          const xWhiskerHigh = toX(stats.whiskerHigh, 500);
-          const xQ1 = toX(stats.q1, 500);
-          const xQ3 = toX(stats.q3, 500);
-          const xMedian = toX(stats.median, 500);
+          const mean = g.values.reduce((sum, v) => sum + v, 0) / g.values.length;
 
           return (
             <g key={g.groupName}>
@@ -94,53 +88,25 @@ export default function BoxPlotChart({ labels, groups }: Props) {
                 {g.groupName}
               </text>
 
-              {/* Whisker line */}
-              <line
-                x1={xWhiskerLow} y1={cy}
-                x2={xWhiskerHigh} y2={cy}
-                stroke={WHISKER_COLOR} strokeWidth={1.5}
-              />
+              {/* Individual vote dots */}
+              {g.values.map((v, j) => (
+                <circle
+                  key={j}
+                  cx={toX(v, 500)}
+                  cy={cy}
+                  r={4}
+                  fill={color}
+                  fillOpacity={0.3}
+                />
+              ))}
 
-              {/* Whisker caps */}
-              <line
-                x1={xWhiskerLow} y1={cy - boxH / 4}
-                x2={xWhiskerLow} y2={cy + boxH / 4}
-                stroke={WHISKER_COLOR} strokeWidth={1.5}
+              {/* Mean dot */}
+              <circle
+                cx={toX(mean, 500)}
+                cy={cy}
+                r={7}
+                fill={color}
               />
-              <line
-                x1={xWhiskerHigh} y1={cy - boxH / 4}
-                x2={xWhiskerHigh} y2={cy + boxH / 4}
-                stroke={WHISKER_COLOR} strokeWidth={1.5}
-              />
-
-              {/* IQR box */}
-              <rect
-                x={xQ1}
-                y={cy - boxH / 2}
-                width={Math.max(xQ3 - xQ1, 1)}
-                height={boxH}
-                fill={BOX_COLOR}
-                fillOpacity={0.7}
-                rx={3}
-              />
-
-              {/* Median line */}
-              <line
-                x1={xMedian} y1={cy - boxH / 2}
-                x2={xMedian} y2={cy + boxH / 2}
-                stroke={MEDIAN_COLOR} strokeWidth={2}
-              />
-
-              {/* Sample size */}
-              <text
-                x={500 - rightPadding + 8}
-                y={cy + 1}
-                dominantBaseline="middle"
-                fontSize={10}
-                fill="#9ca3af"
-              >
-                n={g.values.length}
-              </text>
             </g>
           );
         })}
