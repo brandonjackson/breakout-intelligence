@@ -1,8 +1,8 @@
 // Diverging color ramp for Likert scales
 // From warm (negative) through neutral to cool (positive)
-const RAMP_5 = ['#dc2626', '#f59e0b', '#a3a3a3', '#38bdf8', '#22c55e'];
-const RAMP_4 = ['#dc2626', '#f59e0b', '#38bdf8', '#22c55e'];
-const RAMP_3 = ['#dc2626', '#a3a3a3', '#22c55e'];
+const RAMP_5 = ['#dc2626', '#F2B104', '#a3a3a3', '#2951FF', '#1F800F'];
+const RAMP_4 = ['#dc2626', '#F2B104', '#2951FF', '#1F800F'];
+const RAMP_3 = ['#dc2626', '#a3a3a3', '#1F800F'];
 
 export function likertColors(n: number): string[] {
   if (n === 3) return RAMP_3;
@@ -13,10 +13,10 @@ export function likertColors(n: number): string[] {
   const colors: string[] = [];
   for (let i = 0; i < n; i++) {
     const t = n === 1 ? 0.5 : i / (n - 1);
-    if (t < 0.25) colors.push(interpolateHex('#dc2626', '#f59e0b', t / 0.25));
-    else if (t < 0.5) colors.push(interpolateHex('#f59e0b', '#a3a3a3', (t - 0.25) / 0.25));
-    else if (t < 0.75) colors.push(interpolateHex('#a3a3a3', '#38bdf8', (t - 0.5) / 0.25));
-    else colors.push(interpolateHex('#38bdf8', '#22c55e', (t - 0.75) / 0.25));
+    if (t < 0.25) colors.push(interpolateHex('#dc2626', '#F2B104', t / 0.25));
+    else if (t < 0.5) colors.push(interpolateHex('#F2B104', '#a3a3a3', (t - 0.25) / 0.25));
+    else if (t < 0.75) colors.push(interpolateHex('#a3a3a3', '#2951FF', (t - 0.5) / 0.25));
+    else colors.push(interpolateHex('#2951FF', '#1F800F', (t - 0.75) / 0.25));
   }
   return colors;
 }

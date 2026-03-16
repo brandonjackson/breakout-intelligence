@@ -49,7 +49,7 @@ export default function EventHome() {
                 <span
                   className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                     session.type === 'plenary'
-                      ? 'bg-indigo-100 text-indigo-700'
+                      ? 'bg-brand-blue/15 text-brand-blue'
                       : 'bg-amber-100 text-amber-700'
                   }`}
                 >
@@ -69,7 +69,7 @@ export default function EventHome() {
             {session.status === 'open' ? (
               <Link
                 to={`/invite/${slug}/session/${session.id}`}
-                className="text-sm font-medium text-indigo-600 hover:text-indigo-800"
+                className="text-sm font-medium text-brand-blue hover:text-brand-deep"
               >
                 Join
               </Link>

@@ -142,7 +142,7 @@ function SessionDevPanel({
       <div className="flex gap-2">
         <button
           onClick={addMockResponses}
-          className="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded hover:bg-indigo-700"
+          className="text-xs bg-brand-blue text-white px-3 py-1.5 rounded hover:bg-brand-deep"
         >
           Add Mock Responses
         </button>
@@ -172,7 +172,7 @@ function LocalStorageViewer() {
     <div>
       <button
         onClick={() => setExpanded(!expanded)}
-        className="text-xs text-indigo-600 hover:text-indigo-800 mb-2"
+        className="text-xs text-brand-blue hover:text-brand-deep mb-2"
       >
         {expanded ? 'Hide' : `Show ${items.length} items`}
       </button>
@@ -180,7 +180,7 @@ function LocalStorageViewer() {
         <div className="max-h-48 overflow-y-auto text-xs font-mono bg-gray-50 rounded p-2 space-y-1">
           {items.map((item) => (
             <div key={item.key} className="break-all">
-              <span className="text-indigo-700">{item.key}</span>
+              <span className="text-brand-blue">{item.key}</span>
               <span className="text-gray-400"> = </span>
               <span className="text-gray-600">{item.value}</span>
             </div>
