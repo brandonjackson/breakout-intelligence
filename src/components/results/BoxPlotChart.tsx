@@ -74,7 +74,7 @@ export default function BoxPlotChart({ labels, groups }: Props) {
                 x={x}
                 y={chartHeight - bottomPadding + 14}
                 textAnchor="middle"
-                fontSize={11}
+                fontSize={16.5}
                 fill="#6b7280"
               >
                 {i + 1}
@@ -97,7 +97,7 @@ export default function BoxPlotChart({ labels, groups }: Props) {
                 y={cy + 1}
                 textAnchor="end"
                 dominantBaseline="middle"
-                fontSize={12}
+                fontSize={18}
                 fill="#374151"
               >
                 {g.groupName}
@@ -130,7 +130,7 @@ export default function BoxPlotChart({ labels, groups }: Props) {
                 y={cy}
                 textAnchor="middle"
                 dominantBaseline="central"
-                fontSize={10}
+                fontSize={15}
                 fontWeight="bold"
                 fill="#ffffff"
               >
