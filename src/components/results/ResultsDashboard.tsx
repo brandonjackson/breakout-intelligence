@@ -49,7 +49,6 @@ function QuestionResults({
   session: SessionDef;
   allResponses: ReturnType<typeof getAllResponses>;
 }) {
-  const n = question.likert_labels.length;
 
   // Collect all values for this question (convert 0-indexed stored value to 1-indexed)
   const allValues = allResponses
