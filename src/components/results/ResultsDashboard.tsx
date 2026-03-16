@@ -2,7 +2,7 @@ import type { SessionDef, QuestionDef } from '../../lib/types';
 import { getAllResponses } from '../../hooks/useResponses';
 import { useResponseContext } from '../../context/ResponseContext';
 import ResponseHistogram from './ResponseHistogram';
-import DivergingBar from './DivergingBar';
+import BoxPlotChart from './BoxPlotChart';
 import SummaryStats from './SummaryStats';
 import GroupBreakdown from './GroupBreakdown';
 import KDEOverlay from './KDEOverlay';
@@ -80,18 +80,11 @@ function QuestionResults({
         })
       : [];
 
-  // Diverging bar data
-  const divergingGroups =
+  // Box plot data for inter-group comparison
+  const boxPlotGroups =
     session.type === 'breakout'
-      ? groupData.map((g) => ({ groupName: g.group.name, counts: g.counts }))
-      : [
-          {
-            groupName: 'All',
-            counts: question.likert_labels.map(
-              (_, i) => allValues.filter((v) => v === i + 1).length
-            ),
-          },
-        ];
+      ? groupData.map((g) => ({ groupName: g.group.name, values: g.values }))
+      : [{ groupName: 'All', values: allValues }];
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 sm:p-6">
@@ -103,7 +96,7 @@ function QuestionResults({
           <KDEOverlay values={allValues} min={1} max={n} />
         </div>
         <div>
-          <DivergingBar labels={question.likert_labels} groups={divergingGroups} />
+          <BoxPlotChart labels={question.likert_labels} groups={boxPlotGroups} />
           <SummaryStats values={allValues} />
         </div>
       </div>
