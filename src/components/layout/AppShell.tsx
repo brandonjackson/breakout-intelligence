@@ -7,22 +7,20 @@ export default function AppShell() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-black">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-2">
+          <Link to="/" className="flex-shrink-0" aria-label="Home">
+            <img src={new URL('../../bi-logo.png', import.meta.url).href} alt="Breakout Intelligence" className="h-7 w-auto" />
+          </Link>
           {inEvent ? (
-            <>
-              <Link to="/" className="flex-shrink-0" aria-label="Home">
-                <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="h-6 w-6" />
-              </Link>
-              <Link
-                to={`/invite/${slugResult.slug}`}
-                className="text-lg font-semibold text-indigo-900 hover:text-indigo-700"
-              >
-                {slugResult.event.name}
-              </Link>
-            </>
+            <Link
+              to={`/invite/${slugResult.slug}`}
+              className="font-heading text-lg font-semibold text-white hover:text-white/80"
+            >
+              {slugResult.event.name}
+            </Link>
           ) : (
-            <Link to="/" className="text-lg font-semibold text-indigo-900 hover:text-indigo-700">
+            <Link to="/" className="font-heading text-lg font-semibold text-white hover:text-white/80">
               Breakout Intelligence
             </Link>
           )}
