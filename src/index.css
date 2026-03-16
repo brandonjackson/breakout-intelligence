@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-blue: #2D5BFF;
+  --color-brand-deep: #1B3BBF;
+  --color-brand-dark: #1A1A2E;
+}
+
+/* Apply Inter Tight to all headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
