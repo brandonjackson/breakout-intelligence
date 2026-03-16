@@ -59,6 +59,7 @@ export default function BoxPlotChart({ labels, groups }: Props) {
       <svg
         viewBox={`0 0 500 ${chartHeight}`}
         className="w-full"
+        style={{ overflow: 'visible' }}
       >
         {/* Light vertical gridlines at each scale point */}
         {labels.map((_, i) => {
