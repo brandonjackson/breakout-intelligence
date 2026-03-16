@@ -17,7 +17,6 @@ export default function GroupBreakdown({ labels, groups }: Props) {
 
   return (
     <div className="mb-4">
-      <h4 className="text-sm font-semibold text-gray-700 mb-2">Group Breakdown</h4>
       <div className="space-y-2">
         {sorted.map((g) => (
           <GroupAccordion key={g.group.id} group={g} labels={labels} />
