@@ -36,9 +36,9 @@ export default function BoxPlotChart({ labels, groups }: Props) {
 
   if (activeGroups.length === 0) return null;
 
-  const rowHeight = 40;
+  const rowHeight = 60;
   const topPadding = 8;
-  const bottomPadding = 36;
+  const bottomPadding = 28;
   const leftPadding = 120;
   const rightPadding = 16;
   const chartHeight = activeGroups.length * rowHeight + topPadding + bottomPadding;
@@ -61,7 +61,7 @@ export default function BoxPlotChart({ labels, groups }: Props) {
         className="w-full"
       >
         {/* Light vertical gridlines at each scale point */}
-        {labels.map((label, i) => {
+        {labels.map((_, i) => {
           const x = toX(i + 1, 500);
           return (
             <g key={i}>
@@ -74,10 +74,10 @@ export default function BoxPlotChart({ labels, groups }: Props) {
                 x={x}
                 y={chartHeight - bottomPadding + 14}
                 textAnchor="middle"
-                fontSize={9}
+                fontSize={11}
                 fill="#6b7280"
               >
-                {label.length > 14 ? label.slice(0, 12) + '…' : label}
+                {i + 1}
               </text>
             </g>
           );
@@ -97,7 +97,7 @@ export default function BoxPlotChart({ labels, groups }: Props) {
                 y={cy + 1}
                 textAnchor="end"
                 dominantBaseline="middle"
-                fontSize={11}
+                fontSize={12}
                 fill="#374151"
               >
                 {g.groupName}

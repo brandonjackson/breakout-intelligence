@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { likertColors } from '../../lib/colors';
-import { mean as calcMean, median as calcMedian } from '../../lib/stats';
 
 interface Props {
   labels: string[];
@@ -23,9 +22,6 @@ export default function ResponseHistogram({ labels, values, title }: Props) {
   // Count responses per option (1-indexed values)
   const counts = labels.map((_, i) => values.filter((v) => v === i + 1).length);
   const data = labels.map((label, i) => ({ label, count: counts[i] }));
-
-  const avg = calcMean(values);
-  const med = calcMedian(values);
 
   return (
     <div className="mb-4">
@@ -43,10 +39,6 @@ export default function ResponseHistogram({ labels, values, title }: Props) {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      <div className="flex gap-3 text-xs text-gray-500 mt-1">
-        <span>Mean: {avg.toFixed(1)}</span>
-        <span>Median: {med.toFixed(1)}</span>
-      </div>
     </div>
   );
 }
