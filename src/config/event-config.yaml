@@ -18,7 +18,7 @@ events:
           - id: "q1"
             prompt: "How would you describe health of UK social contract today?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -46,7 +46,7 @@ events:
           - id: "q2"
             prompt: "In Scenario 1, how would you describe health of UK social contract overall?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -54,7 +54,7 @@ events:
           - id: "q3"
             prompt: "In Scenario 1, how would you describe health of UK social contract, with regards to energy?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -62,7 +62,7 @@ events:
           - id: "q4"
             prompt: "In Scenario 1, how would you describe health of UK social contract, with regards to education?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -70,7 +70,7 @@ events:
           - id: "q5"
             prompt: "In Scenario 1, how would you describe health of UK social contract, with regards to health?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -78,7 +78,7 @@ events:
           - id: "q6"
             prompt: "In Scenario 2, how would you describe health of UK social contract overall?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -86,7 +86,7 @@ events:
           - id: "q7"
             prompt: "In Scenario 2, how would you describe health of UK social contract, with regards to energy?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -94,7 +94,7 @@ events:
           - id: "q8"
             prompt: "In Scenario 2, how would you describe health of UK social contract, with regards to education?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -102,7 +102,7 @@ events:
           - id: "q9"
             prompt: "In Scenario 2, how would you describe health of UK social contract, with regards to health?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -130,7 +130,7 @@ events:
           - id: "q10"
             prompt: "In scenario 1, how would you describe the health of UK social contract w.r.t. your policy area?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -138,7 +138,7 @@ events:
           - id: "q11"
             prompt: "In scenario 2, how would you describe the health of UK social contract w.r.t. your policy area?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -146,7 +146,7 @@ events:
           - id: "q12"
             prompt: "In scenario 1, how would you describe the health of UK social contract w.r.t. your policy area after your proposed policies were delivered?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
@@ -154,7 +154,7 @@ events:
           - id: "q13"
             prompt: "In scenario 2, how would you describe the health of UK social contract w.r.t. your policy area after your proposed policies were delivered?"
             likert_labels:
-              - "Systemic instability"
+              - "Collapsing"
               - "Broken for everyone"
               - "Broken for some"
               - "Stable"
